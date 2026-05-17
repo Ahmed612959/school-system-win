@@ -698,14 +698,7 @@ app.use((err, req, res, next) => {
 
 
 // ====================== التصدير لـ Vercel ======================
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📁 Serving static files from "public" folder`);
-    console.log(`🌐 Open http://localhost:${PORT}/login.html`);
-});
-
-
+module.exports = app;
 
 
 
