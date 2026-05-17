@@ -15,8 +15,11 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(express.static('public'));
-
+// خدمة الملفات الثابتة من مجلد الجذر
+app.use(express.static(__dirname, {
+    index: 'index.html',
+    extensions: ['html', 'htm']
+}));
 // ====================== دالة التشفير ======================
 function hashPassword(password) {
     return crypto.createHash('sha256').update(password).digest('hex');
