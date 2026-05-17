@@ -15,33 +15,13 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-// خدمة الملفات الثابتة من مجلد الجذر
+
+// ====================== خدمة الملفات الثابتة ======================
+// خدمة الملفات من المجلد الحالي (HTML, CSS, JS, صور)
 app.use(express.static(__dirname, {
     index: 'index.html',
     extensions: ['html', 'htm']
 }));
-// خدمة جميع الملفات الثابتة من المجلد الحالي
-const fs = require('fs');
-const path = require('path');
-
-// التأكد من أن الملف المطلوب موجود قبل خدمته
-app.get('*', (req, res, next) => {
-    const filePath = path.join(__dirname, req.path);
-    if (req.path.startsWith('/api')) return next();
-    
-    fs.access(filePath, fs.constants.F_OK, (err) => {
-        if (!err && req.path !== '/') {
-            res.sendFile(filePath);
-        } else {
-            next();
-        }
-    });
-});
-
-// صفحة رئيسية
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
 // ====================== دالة التشفير ======================
 function hashPassword(password) {
     return crypto.createHash('sha256').update(password).digest('hex');
